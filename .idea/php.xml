@@ -131,6 +131,9 @@
       <path value="$PROJECT_DIR$/bookingalien/vendor/doctrine/instantiator" />
       <path value="$PROJECT_DIR$/bookingalien/vendor/doctrine/lexer" />
       <path value="$PROJECT_DIR$/bookingalien/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/bookingalien/vendor/symfonycasts/verify-email-bundle" />
+      <path value="$PROJECT_DIR$/bookingalien/vendor/symfony/lock" />
+      <path value="$PROJECT_DIR$/bookingalien/vendor/symfony/rate-limiter" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
