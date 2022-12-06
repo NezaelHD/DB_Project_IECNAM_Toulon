@@ -1,6 +1,6 @@
-CREATE DATABASE BookingAlien;
+CREATE DATABASE bookingalien;
 
-\c BookingAlien;
+\c bookingalien
 
 -- Suppression de la base existante
 
@@ -108,35 +108,20 @@ CREATE TABLE CityActivities (
 -- Création des fonctions trigger
 
 CREATE OR REPLACE FUNCTION Hotel_Place_Down_update()
-RETURNS TRIGGER
-LANGUAGE plpgsql
+    RETURNS TRIGGER
+    LANGUAGE plpgsql
 AS
 $$
-    BEGIN
-    	IF (SELECT hotelNbPlace FROM hotel WHERE hotelID = (SELECT hotelID FROM trip)) = 0
-        THEN RAISE EXCEPTION 'Max retry count exceeded';
-        ELSE
-          UPDATE hotel
-          SET hotelNbPlace = hotelNbPlace - 1
-          WHERE hotelID = (SELECT hotelID FROM trip);
+BEGIN
+    IF (SELECT hotelNbPlace FROM hotel WHERE hotelID = OLD.hotelid) = 0 THEN
+        RAISE EXCEPTION 'Plus de place';
+    END IF;
 
-          RETURN NEW;
-    	END IF;
-    END
-$$;
-
-CREATE OR REPLACE FUNCTION Hotel_Place_Up_update()
-RETURNS TRIGGER
-LANGUAGE plpgsql
-AS
-$$
-    BEGIN
-        UPDATE hotel
-        SET hotelNbPlace = hotelNbPlace + 1
-       	WHERE hotelID = (SELECT hotelID FROM trip);
-        
-        RETURN OLD;
-    END
+    UPDATE hotel
+    SET hotelNbPlace = hotelNbPlace + 1
+    WHERE hotelID = NEW.hotelID;
+    RETURN NEW;
+END
 $$;
 
 -- Création des triggers 
@@ -145,11 +130,6 @@ CREATE OR REPLACE TRIGGER Hotel_Place_Down_Trigger
     AFTER INSERT ON trip
     FOR EACH ROW
     EXECUTE FUNCTION Hotel_Place_Down_update();
-
-CREATE OR REPLACE TRIGGER Hotel_Place_Up_Trigger
-    BEFORE DELETE ON trip
-    FOR EACH ROW
-    EXECUTE FUNCTION Hotel_Place_Up_update();
 
 
 -- Impémentation des données
