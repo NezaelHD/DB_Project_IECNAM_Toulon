@@ -157,6 +157,25 @@ body {
 
 }
 
+.all-hostel-second-part-text button{
+    font-size: 30px;
+    font-weight: 700;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background: linear-gradient(90deg, #F0A311 0%, #F05611 100%);
+    transition: .7s;
+    transform: translate(-60px, 60px);
+}
+.all-hostel-second-part-text button:hover{
+    color: #F0A311;
+    border: 2px solid #F0A311;
+    background: transparent;
+    transition: .7s;
+}
+
 .all-hostel-second-part-text .star-icon-3 {
     top: 150px;
     left: -60px;
