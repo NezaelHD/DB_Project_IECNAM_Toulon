@@ -131,11 +131,74 @@ body{
     border: 2px solid transparent;
     background: linear-gradient(90deg, #F0A311 0%, #F05611 100%);
     transition: .7s;
-
 }
 .body .id-hotel button:hover{
     color: #F0A311;
     border: 2px solid #F0A311;
     background: transparent;
     transition: .7s;
+}
+
+
+.activity {
+    border: 5px solid #F0A311;
+    padding: 5px;
+    margin-top: 40px;
+    border-radius: 20px;
+    height: 25%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+.activity h1{
+    margin-left: 50px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 50px;
+    font-weight: 600;
+    color: #000000;
+    position: absolute;
+    top : -100%;
+    left : 0%;
+}
+.activity .id-activity{
+    margin-left: 40px;
+    font-family: 'Raleway', sans-serif;
+}
+.activity .id-activity h2{
+    margin-left: 0px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    transform: translate(0%, 25%);
+}
+.activity .id-activity button{
+    font-size: 20px;
+    font-weight: 500;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background: linear-gradient(90deg, #F0A311 0%, #F05611 100%);
+    transition: .7s;
+}
+.activity .id-activity button:hover{
+    color: #F0A311;
+    border: 2px solid #F0A311;
+    background: transparent;
+    transition: .7s;
+}
+.activity .image-activity{
+    width: 200px;
+    height: 125px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px #ACACAC;
+    position: relative;
+    transform: translate(0%, 25%);
 }
