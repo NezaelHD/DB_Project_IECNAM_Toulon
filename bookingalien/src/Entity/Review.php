@@ -10,16 +10,13 @@ class Review
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\Column(name:'reviewID')]
     private ?int $reviewID = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'reviewOpinion', length: 255)]
     private ?string $reviewOpinion = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name:'reviewStars')]
     private ?int $reviewStars = null;
 
     #[ORM\ManyToOne]
@@ -29,15 +26,10 @@ class Review
     private ?Activity $activityID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name:'travellerEmail', nullable: false)]
     private ?Traveller $travellerEmail = null;
 
     public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getReviewID(): ?int
     {
         return $this->reviewID;
     }

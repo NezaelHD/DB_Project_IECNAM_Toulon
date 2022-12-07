@@ -15,11 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Traveller implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
-
-    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[ORM\Column(name:'travellerEmail', type: 'string', length: 255, unique: true)]
     private ?string $travellerEmail = null;
 
     #[ORM\Column(type: 'json')]
@@ -28,30 +24,22 @@ class Traveller implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private ?string $password;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'travellerName', length: 255)]
     private ?string $travellerName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'travellerSurname', length: 255)]
     private ?string $travellerSurname = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name:'planetName', nullable: false)]
     private ?Planet $planetName = null;
 
     #[ORM\OneToMany(mappedBy: 'travellerEmail', targetEntity: Trip::class, orphanRemoval: true)]
     private Collection $trips;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $isVerified = false;
-
     public function __construct()
     {
         $this->trips = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getTravellerEmail(): ?string
@@ -174,17 +162,5 @@ class Traveller implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
     }
 }

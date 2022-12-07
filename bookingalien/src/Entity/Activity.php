@@ -10,21 +10,18 @@ class Activity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\Column(name:'activityID')]
     private ?int $activityID = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'activityName', length: 255)]
     private ?string $activityName = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'activityPrice')]
     private ?float $activityPrice = null;
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->activityID;
     }
 
     public function getActivityID(): ?int

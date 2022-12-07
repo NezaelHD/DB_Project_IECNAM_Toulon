@@ -10,25 +10,22 @@ class Hotel
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\Column(name:'hotelID')]
     private ?int $hotelID = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'hotelName', length: 255)]
     private ?string $hotelName = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $hotelAdress = null;
+    #[ORM\Column(name:'hotelAddress', length: 255)]
+    private ?string $hotelAddress = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'hotelZip')]
     private ?float $hotelZip = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'hotelNbPlace')]
     private ?int $hotelNbPlace = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'hotelPrice')]
     private ?float $hotelPrice = null;
 
     #[ORM\ManyToOne]
@@ -36,11 +33,6 @@ class Hotel
     private ?City $cityID = null;
 
     public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getHotelID(): ?int
     {
         return $this->hotelID;
     }
@@ -64,14 +56,14 @@ class Hotel
         return $this;
     }
 
-    public function getHotelAdress(): ?string
+    public function getHotelAddress(): ?string
     {
-        return $this->hotelAdress;
+        return $this->hotelAddress;
     }
 
-    public function setHotelAdress(string $hotelAdress): self
+    public function setHotelAddress(string $hotelAddress): self
     {
-        $this->hotelAdress = $hotelAdress;
+        $this->hotelAddress = $hotelAddress;
 
         return $this;
     }

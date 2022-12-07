@@ -11,9 +11,6 @@ class City
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
     private ?int $cityID = null;
 
     #[ORM\Column(length: 255)]
@@ -24,11 +21,6 @@ class City
     private ?Country $countryName = null;
 
     public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getCityID(): ?int
     {
         return $this->cityID;
     }
