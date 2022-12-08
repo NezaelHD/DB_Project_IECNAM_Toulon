@@ -11,11 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Country
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'countryName', length: 255)]
     private ?string $countryName = null;
 
     #[ORM\OneToMany(mappedBy: 'countryName', targetEntity: City::class, orphanRemoval: true)]

@@ -6,26 +6,32 @@ use App\Repository\TravellerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: TravellerRepository::class)]
-class Traveller
+#[UniqueEntity(fields: ['travellerEmail'], message: 'There is already an account with this travellerEmail')]
+class Traveller implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'travellerEmail', type: 'string', length: 255, unique: true)]
     private ?string $travellerEmail = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'json')]
+    private ?array $roles = [];
+
+    #[ORM\Column(type: 'string')]
+    private ?string $password;
+
+    #[ORM\Column(name:'travellerName', length: 255)]
     private ?string $travellerName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'travellerSurname', length: 255)]
     private ?string $travellerSurname = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name:'planetName', referencedColumnName:'planetName', nullable: false)]
     private ?Planet $planetName = null;
 
     #[ORM\OneToMany(mappedBy: 'travellerEmail', targetEntity: Trip::class, orphanRemoval: true)]
@@ -34,11 +40,6 @@ class Traveller
     public function __construct()
     {
         $this->trips = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getTravellerEmail(): ?string
@@ -117,5 +118,49 @@ class Traveller
         }
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->travellerEmail;
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

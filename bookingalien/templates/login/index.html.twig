@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <main class="connection-panel">
+        <div class="connection-panel__container row align-items-center g-0 ">
+            <div class="connection-panel__form col-md-6 col-12 order-1 order-md-0">
+                <h1>Connexion</h1>
+                {{ form(loginForm) }}
+                <span class="having-account">Vous n'avez pas de compte ? <a href="{{ path('app_register') }}">Inscrivez-vous !</a></span>
+            </div>
+            <div class="connection-panel__image col-md-6 col-12 order-0 order-md-1">
+                <p>Hey !<br> Re-Bonjour</p>
+            </div>
+        </div>
+    </main>
+{% endblock %}

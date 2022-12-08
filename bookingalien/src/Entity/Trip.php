@@ -11,32 +11,30 @@ class Trip
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\Column(name:'tripID')]
     private ?int $tripID = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(name:'tripStart', type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $tripStart = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(name:'tripEnd', type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $tripEnd = null;
 
     #[ORM\ManyToOne(inversedBy: 'trips')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name:'travellerEmail', referencedColumnName:'travellerEmail', nullable: false)]
     private ?Traveller $travellerEmail = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name:'activityID', referencedColumnName:'activityID' ,nullable: false)]
     private ?Activity $activityID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name:'hotelID', referencedColumnName:'hotelID', nullable: false)]
     private ?Hotel $hotelID = null;
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->tripID;
     }
 
     public function getTripID(): ?int

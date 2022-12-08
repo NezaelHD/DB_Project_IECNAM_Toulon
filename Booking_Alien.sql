@@ -35,6 +35,8 @@ CREATE TABLE Traveller (
                            travellerEmail VARCHAR(50) PRIMARY KEY NOT NULL,
                            travellerName VARCHAR(50) NOT NULL,
                            travellerSurname VARCHAR(50) NOT NULL,
+                           password VARCHAR(255) NOT NULL,
+                           roles JSON,
                            planetName VARCHAR(50) NOT NULL,
                            FOREIGN KEY (planetName) REFERENCES Planet (planetName)
 );
@@ -46,7 +48,7 @@ CREATE TABLE Country (
 );
 
 CREATE TABLE City (
-                      cityID VARCHAR(10) PRIMARY KEY NOT NULL,
+                      cityID SERIAL PRIMARY KEY NOT NULL,
                       cityName VARCHAR(50) NOT NULL,
                       countryName VARCHAR(50) NOT NULL,
                       FOREIGN KEY (countryName) REFERENCES Country (countryName)
@@ -58,8 +60,7 @@ CREATE TABLE Hotel (
                        hotelNbPlace INTEGER NOT NULL,
                        hotelPrice FLOAT NOT NULL,
                        hotelAddress VARCHAR(255) NOT NULL,
-                       hotelZip VARCHAR(50) NOT NULL,
-                       cityID VARCHAR(10) NOT NULL,
+                       cityID INTEGER NOT NULL,
                        FOREIGN KEY (cityID) REFERENCES City (cityID),
                        CHECK (hotelNbPlace >= 0),
                        CHECK (hotelPrice > 0)
@@ -100,7 +101,7 @@ CREATE TABLE Review (
 
 CREATE TABLE CityActivities (
                                 activityID INTEGER NOT NULL,
-                                cityID VARCHAR(10) NOT NULL,
+                                cityID INTEGER NOT NULL,
                                 FOREIGN KEY (activityID) REFERENCES Activity (activityID),
                                 FOREIGN KEY (cityID) REFERENCES City (cityID)
 );
@@ -204,14 +205,14 @@ INSERT INTO Country (countryName, currencyName) VALUES ('France', 'Euro');
 INSERT INTO Country (countryName, currencyName) VALUES ('China', 'Yen');
 
 -- City
-INSERT INTO City (cityID, cityName, countryName) VALUES ('FR123', 'Toulon', 'France');
-INSERT INTO City (cityID, cityName, countryName) VALUES ('FR001', 'Anger', 'France');
-INSERT INTO City (cityID, cityName, countryName) VALUES ('US001', 'New York City', 'USA');
-INSERT INTO City (cityID, cityName, countryName) VALUES ('US014', 'Chicago', 'USA');
-INSERT INTO City (cityID, cityName, countryName) VALUES ('CH234', 'Shangaï', 'China');
-INSERT INTO City (cityID, cityName, countryName) VALUES ('CH346', 'Wuhan', 'China');
-INSERT INTO City (cityID, cityName, countryName) VALUES ('NZ323', 'Wellington', 'New Zeland');
-INSERT INTO City (cityID, cityName, countryName) VALUES ('NZ014', 'Auckland', 'New Zeland');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('4', 'Toulon', 'France');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('3', 'Anger', 'France');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('2', 'New York City', 'USA');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('1', 'Chicago', 'USA');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('5', 'Shangaï', 'China');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('6', 'Wuhan', 'China');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('8', 'Wellington', 'New Zeland');
+INSERT INTO City (cityID, cityName, countryName) VALUES ('7', 'Auckland', 'New Zeland');
 
 --Activity
 INSERT INTO Activity (activityName, activityPrice) VALUES ('Visite des caves local', 59.0);
@@ -223,33 +224,33 @@ INSERT INTO Activity (activityName, activityPrice) VALUES ('Kayak', 25.0);
 INSERT INTO Activity (activityName, activityPrice) VALUES ('Pèche', 3.5);
 
 -- Hotel
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('The Continental', 80, 250, '82-92 Beaver Street at Pearl Street The Beaver Building', 'NY 10005', 'US001');
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('Le Gîte à Pépé', 8, 750, 'Le carrefour (lieu dit)', '49100', 'FR001');
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('L Auberge du poney fringuan', 32, 40, '2 jessie street', '3011', 'NZ323');
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('Le Crous', 300, 24, '657 avenue du 1er Bimp', '83100', 'FR123');
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('Allerton Hotel', 109, 122, '701 Michigan Ave' , 'IL 60611', 'US014');
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('Pacific hotel', 400, 68, '108 Nanjing Rd (W)', '200003', 'CH234');
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('Wanda Reign', 315, 190, 'Wuchang District', '430077', 'CH346');
-INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, hotelZip, cityID)
-VALUES ('Hilton', 220, 332, '47 Quay Street', '1010', 'NZ014');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('The Continental', 80, 250, '82-92 Beaver Street at Pearl Street The Beaver Building', '1');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('Le Gîte à Pépé', 8, 750, 'Le carrefour (lieu dit)', '2');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('L Auberge du poney fringuan', 32, 40, '2 jessie street', '3');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('Le Crous', 300, 24, '657 avenue du 1er Bimp', '4');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('Allerton Hotel', 109, 122, '701 Michigan Ave', '5');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('Pacific hotel', 400, 68, '108 Nanjing Rd (W)', '6');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('Wanda Reign', 315, 190, 'Wuchang District', '7');
+INSERT INTO Hotel (hotelName, hotelNbPlace, hotelPrice, hotelAddress, cityID)
+VALUES ('Hilton', 220, 332, '47 Quay Street', '8');
 
---Traveller
-INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, planetName)
-VALUES ('george.foulpon@msn.pl', 'Foulpon', 'George', 'Plouplon');
-INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, planetName)
-VALUES ('narfpclo.gz@protonmail.N', 'Narfpclo', 'Gz', 'N{0Az@');
-INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, planetName)
-VALUES ('blou.bloublon@bloublou.blou', 'Blou', 'Bloublou', 'Bloublon');
-INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, planetName)
-VALUES ('mxfive.32@mpx./', 'MX-FIVE', '32', 'P3X-542');
-INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, planetName)
-VALUES ('aaaaaaaa.bbbbb@ccc.dd', 'AAaaAAAa', 'BbBBb', 'Felucia');
-INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, planetName)
-VALUES ('zerg.grez@xyz.zyx', 'Zerg', 'Grez', 'Zorgulon');
+--Traveller password = password
+INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, password, roles, planetName)
+VALUES ('george.foulpon@msn.pl', 'Foulpon', 'George', '$2y$10$OlLrTNFrVFH/mlWiWSIUFODkNik2doTQ9TQOHLgkGBJnc88ACfp.a', '[]', 'Plouplon');
+INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, password, roles, planetName)
+VALUES ('narfpclo.gz@protonmail.N', 'Narfpclo', 'Gz', '$2y$10$OlLrTNFrVFH/mlWiWSIUFODkNik2doTQ9TQOHLgkGBJnc88ACfp.a', '[]', 'N{0Az@');
+INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, password, roles, planetName)
+VALUES ('blou.bloublon@bloublou.blou', 'Blou', 'Bloublou', '$2y$10$OlLrTNFrVFH/mlWiWSIUFODkNik2doTQ9TQOHLgkGBJnc88ACfp.a', '[]', 'Bloublon');
+INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, password, roles, planetName)
+VALUES ('mxfive.32@mpx./', 'MX-FIVE', '32', '$2y$10$OlLrTNFrVFH/mlWiWSIUFODkNik2doTQ9TQOHLgkGBJnc88ACfp.a', '[]', 'P3X-542');
+INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, password, roles, planetName)
+VALUES ('aaaaaaaa.bbbbb@ccc.dd', 'AAaaAAAa', 'BbBBb', '$2y$10$OlLrTNFrVFH/mlWiWSIUFODkNik2doTQ9TQOHLgkGBJnc88ACfp.a', '[]', 'Felucia');
+INSERT INTO Traveller (travellerEmail, travellerName, travellerSurname, password, roles, planetName)
+VALUES ('zerg.grez@xyz.zyx', 'Zerg', 'Grez', '$2y$10$OlLrTNFrVFH/mlWiWSIUFODkNik2doTQ9TQOHLgkGBJnc88ACfp.a', '[]', 'Zorgulon');
