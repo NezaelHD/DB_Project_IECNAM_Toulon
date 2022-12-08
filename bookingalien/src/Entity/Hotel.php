@@ -19,9 +19,6 @@ class Hotel
     #[ORM\Column(name:'hotelAddress', length: 255)]
     private ?string $hotelAddress = null;
 
-    #[ORM\Column(name: 'hotelZip')]
-    private ?float $hotelZip = null;
-
     #[ORM\Column(name: 'hotelNbPlace')]
     private ?int $hotelNbPlace = null;
 

@@ -39,9 +39,7 @@ class LoginController extends AbstractController
             )
         );
     }
-    #[Route('/testt', name: 'app_testt')]
-    public function testt(TravellerRepository $tr){
-        return new Response($tr->find("blou.bloublon@bloublou.blou")->getTravellerName(), 200);
-    }
+    #[Route('/logout', name: 'app_logout')]
+    public function logout(){}
 
 }
