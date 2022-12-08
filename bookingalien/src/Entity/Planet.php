@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Planet
 {
     #[ORM\Id]
-    #[ORM\Column(name:'planetName', length: 255)]
+    #[ORM\Column(name:'planetName',type: 'string', length: 255)]
     private ?string $planetName = null;
 
     public function getPlanetName(): ?string

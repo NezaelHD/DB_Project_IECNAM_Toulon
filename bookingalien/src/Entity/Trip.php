@@ -21,14 +21,15 @@ class Trip
     private ?\DateTimeInterface $tripEnd = null;
 
     #[ORM\ManyToOne(inversedBy: 'trips')]
-    #[ORM\JoinColumn(name:'travellerEmail', nullable: false)]
+    #[ORM\JoinColumn(name:'travellerEmail', referencedColumnName:'travellerEmail', nullable: false)]
     private ?Traveller $travellerEmail = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name:'activityID', referencedColumnName:'activityID' ,nullable: false)]
     private ?Activity $activityID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name:'hotelID', nullable: false)]
+    #[ORM\JoinColumn(name:'hotelID', referencedColumnName:'hotelID', nullable: false)]
     private ?Hotel $hotelID = null;
 
     public function getId(): ?int

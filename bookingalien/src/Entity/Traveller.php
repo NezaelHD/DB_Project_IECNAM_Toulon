@@ -31,7 +31,7 @@ class Traveller implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $travellerSurname = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name:'planetName', nullable: false)]
+    #[ORM\JoinColumn(name:'planetName', referencedColumnName:'planetName', nullable: false)]
     private ?Planet $planetName = null;
 
     #[ORM\OneToMany(mappedBy: 'travellerEmail', targetEntity: Trip::class, orphanRemoval: true)]

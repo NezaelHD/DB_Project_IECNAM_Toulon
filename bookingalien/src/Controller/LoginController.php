@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Traveller;
 use App\Form\LoginFormType;
+use App\Repository\TravellerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,4 +39,9 @@ class LoginController extends AbstractController
             )
         );
     }
+    #[Route('/testt', name: 'app_testt')]
+    public function testt(TravellerRepository $tr){
+        return new Response($tr->find("blou.bloublon@bloublou.blou")->getTravellerName(), 200);
+    }
+
 }

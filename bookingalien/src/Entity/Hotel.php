@@ -29,7 +29,7 @@ class Hotel
     private ?float $hotelPrice = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name:'cityID', referencedColumnName:'cityID', nullable: false)]
     private ?City $cityID = null;
 
     public function getId(): ?int

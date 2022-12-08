@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActivityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActivityRepository::class)]
@@ -18,6 +20,14 @@ class Activity
 
     #[ORM\Column(name: 'activityPrice')]
     private ?float $activityPrice = null;
+
+    #[ORM\ManyToMany(targetEntity: City::class, mappedBy: 'activities')]
+    private Collection $cities;
+
+    public function __construct()
+    {
+        $this->cities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -56,6 +66,33 @@ class Activity
     public function setActivityPrice(float $activityPrice): self
     {
         $this->activityPrice = $activityPrice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, City>
+     */
+    public function getCities(): Collection
+    {
+        return $this->cities;
+    }
+
+    public function addCity(City $city): self
+    {
+        if (!$this->cities->contains($city)) {
+            $this->cities->add($city);
+            $city->addActivity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCity(City $city): self
+    {
+        if ($this->cities->removeElement($city)) {
+            $city->removeActivity($this);
+        }
 
         return $this;
     }

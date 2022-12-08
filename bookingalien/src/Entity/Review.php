@@ -20,13 +20,15 @@ class Review
     private ?int $reviewStars = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name:'hotelID', referencedColumnName:'hotelID', nullable: false)]
     private ?Hotel $hotelID = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name:'activityID', referencedColumnName:'activityID', nullable: false)]
     private ?Activity $activityID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name:'travellerEmail', nullable: false)]
+    #[ORM\JoinColumn(name:'travellerEmail', referencedColumnName:'travellerEmail', nullable: false)]
     private ?Traveller $travellerEmail = null;
 
     public function getId(): ?int
