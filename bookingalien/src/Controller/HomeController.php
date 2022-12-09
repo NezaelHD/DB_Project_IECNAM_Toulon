@@ -16,20 +16,24 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(CountryRepository $cr): Response
     {
         $allCountries = $cr->findAll();
         return $this->render('home/index.html.twig', [
-            'cities' => $allCountries
+            'countries' => $allCountries
         ]);
     }
 
     #[Route('/country/{country}/cities', name: 'ajax_city')]
-    public function city(Country $country, SerializerInterface $serializer, CityRepository $cr): JsonResponse
+    public function city(Country $country, SerializerInterface $serializer, CityRepository $cr)
     {
-        $allCities = $cr->findBy(['countryID' => $country]);
-        $data = $serializer->serialize($allCities, JsonEncoder::FORMAT);
+        $allCities = $cr->findBy(['countryName' => $country]);
+        $data = $serializer->serialize($allCities, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }]
+        );
         return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 
@@ -37,7 +41,10 @@ class HomeController extends AbstractController
     public function hotel(City $city, SerializerInterface $serializer, HotelRepository $hr): JsonResponse
     {
         $allHotels = $hr->findBy(['cityID' => $city]);
-        $data = $serializer->serialize($allHotels, JsonEncoder::FORMAT);
+        $data = $serializer->serialize($allHotels, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }]);
         return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 }

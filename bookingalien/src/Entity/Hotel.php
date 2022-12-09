@@ -65,18 +65,6 @@ class Hotel
         return $this;
     }
 
-    public function getHotelZip(): ?float
-    {
-        return $this->hotelZip;
-    }
-
-    public function setHotelZip(float $hotelZip): self
-    {
-        $this->hotelZip = $hotelZip;
-
-        return $this;
-    }
-
     public function getHotelNbPlace(): ?int
     {
         return $this->hotelNbPlace;

@@ -3,18 +3,43 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section id="all-hostel">
+        <div class="all-hostel-first-part">
+            <div class="all-hostel-first-part-text">
+                <h1>Votre <span>prochaine
+                    destination</span> c’est</h1>
+                <select id="country-select">
+                    <option value="" disabled selected>-- Pays --</option>
+                    {% for country in countries %}
+                        <option value="{{ country.countryName }}">{{ country.countryName }}</option>
+                    {% endfor %}
+                </select>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                <img class="star-icon star-icon-1" src="{{ asset('build/sparkles.png') }}">
+                <img class="star-icon star-icon-2" src="{{ asset('build/sparkles.png') }}">
+            </div>
+        </div>
+        <div class="all-hostel-second-part">
+            <div class="all-hostel-second-part-number">
+                <h3>01</h3>
+                <h3>02</h3>
+                <h3>03</h3>
+            </div>
+            <img src="{{ asset('build/gratte-ciel.jpg') }}" class="all-hostel-second-part-image">
+            <h2 class="all-hostel-second-part-image-h2">01</h2>
+            <div class="all-hostel-second-part-text">
+                <h1>Je veux un hôtel
+                    Extra-ordinaire !</h1>
+                <select disabled id="city-select">
+                    <option value="" disabled selected>-- Ville --</option>
+                </select>
+                <select disabled id="hotel-select">
+                    <option value="" disabled selected>-- Hôtel --</option>
+                </select>
+                <button id="goToHotelPage" data-url="">C'est parti !</button>
+                <img class="star-icon star-icon-3" src="{{ asset('build/sparkles.png') }}">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/bookingalien/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/bookingalien/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
