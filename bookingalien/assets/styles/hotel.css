@@ -101,7 +101,8 @@ body {
 
 }
 
-.all-hostel-second-part-image h2 {
+.all-hostel-second-part-image-h2 {
+    position: absolute;
     font-family: 'Raleway', sans-serif;
     font-size: 290px;
     font-weight: 700;
@@ -109,7 +110,7 @@ body {
     opacity: .2;
     text-align: center;
     margin: 0;
-    left: -50%;
+    left: -20%;
     top: -50%;
     transform: translate(-60%, 0%);
     z-index: 1;

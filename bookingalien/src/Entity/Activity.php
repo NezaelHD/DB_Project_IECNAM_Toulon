@@ -22,6 +22,7 @@ class Activity
     private ?float $activityPrice = null;
 
     #[ORM\ManyToMany(targetEntity: City::class, mappedBy: 'activities')]
+    #[ORM\JoinColumn(name: 'cityID', referencedColumnName: 'cityID')]
     private Collection $cities;
 
     public function __construct()

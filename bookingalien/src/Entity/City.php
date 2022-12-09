@@ -15,7 +15,7 @@ class City
     #[ORM\Column(name:'cityID')]
     private ?int $cityID = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name:'cityName', length: 255)]
     private ?string $cityName = null;
 
     #[ORM\ManyToOne(inversedBy: 'cities')]

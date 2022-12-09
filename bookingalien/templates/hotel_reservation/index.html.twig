@@ -1,20 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HotelReservationController!{% endblock %}
+{% block title %}BookingAlien - {{ hotel.hotelName }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section id = "resa-hotel">
+        <div class = "title">
+            <img class="star-icon star-icon-1" src="{{ asset('build/sparkles.png') }}">
+            <img class="star-icon star-icon-2" src="{{ asset('build/sparkles.png') }}">
+            <h1>Prêt pour</h1>
+            <h1>{{ city.cityName }}</h1>
+        </div>
+        <div class = "body">
+            <img class = "image" src= " {{ asset('build/gratte-ciel.jpg') }}">
+            <h1>01</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/bookingalien/src/Controller/HotelReservationController.php'|file_link(0) }}">src/Controller/HotelReservationController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/bookingalien/templates/hotel_reservation/index.html.twig'|file_link(0) }}">templates/hotel_reservation/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <div class = "id-hotel">
+                <h1>{{ hotel.hotelName }}</h1>
+                <h2>{{ hotel.hotelAddress }}</h2>
+                <h3><span>{{ hotel.hotelPrice }}$</span> /nuit</h3>
+                <button>Je réserve</button>
+            </div>
+        </img>
+    </section>
+    <div class="activities">
+        <h2 class="activity-title">Les activitées disponibles</h2>
+        {% for activity in activities %}
+            <div class = "activity">
+                <img class = "image-activity" src=" {{ asset('build/alien.png') }}">
+                <h1>{{ activity.activityName }}</h1>
+                <div class = "id-activity">
+                    <h2>{{ activity.activityPrice }}</h2>
+                    <button>Je l'ajoute</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
